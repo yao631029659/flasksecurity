@@ -1,11 +1,9 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_security import Security, SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, login_required
-from flask_security.utils import logout_user
+from flask_security import SQLAlchemyUserDatastore, \
+    UserMixin, RoleMixin
 from flask_sqlalchemy import SQLAlchemy
 db=SQLAlchemy()
-# Define models
+
+# 定义模型 多对多关系
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
         db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
@@ -26,4 +24,3 @@ class User(db.Model, UserMixin):
 
 # Setup Flask-Security
 # user_datastore需要三个参数 操控新增数据库的db，和两个表模型
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)

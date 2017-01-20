@@ -1,14 +1,13 @@
 from flask import Flask, render_template
-from flask_security import Security,login_required
+from flask_security import Security,login_required,roles_required
 from flask_security.utils import logout_user
-from webapp.models import db,user_datastore
+from webapp.extension import user_datastore
+from webapp.models import db,User
+from webapp.config import Config
 
 # Create app
 app = Flask(__name__)
-app.config['DEBUG'] = True
-app.config['SECRET_KEY'] = 'super-secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-
+app.config.from_object(Config)
 db.init_app(app)
 
 
@@ -22,7 +21,9 @@ security = Security(app, user_datastore)
 @app.before_first_request
 def create_user():
     db.create_all()
-    user_datastore.create_user(email='matt@nobien.net', password='password')
+    user1=user_datastore.create_user(email='yoyo3', password='12345678')
+    role1=user_datastore.create_role(name='admin',description='系统管理员')
+    user_datastore.add_role_to_user(user1,role1)
     db.session.commit()
 
 # Views
@@ -33,6 +34,14 @@ def home():
 @app.route('/logout')
 def logout():
     logout_user()
+
+@app.route('/secret')
+# 只允许特定角色使用
+@login_required
+# @roles_required('admin', 'editor') 它是and的关系
+@roles_required('admin')
+def secret():
+    return '看到秘密了吗？'
 
 
 if __name__ == '__main__':
