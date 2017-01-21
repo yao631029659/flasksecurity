@@ -1,0 +1,23 @@
+{% extends "security/base.html" %}
+{% block content%}
+    {#    所有的wtf都被存在下面这个文件下了#}
+    {% from "security/_macros.html" import render_field_with_errors, render_field %}
+    {#    这个是消息文件 不信你可以注释掉试试#}
+    {% include "security/_messages.html" %}
+
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Register</h1>
+        <form action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
+            {{ register_user_form.hidden_tag() }}
+            {{ render_field_with_errors(register_user_form.email,class_='form-control') }}
+            {{ render_field_with_errors(register_user_form.password,class_='form-control') }}
+            {% if register_user_form.password_confirm %}
+                {{ render_field_with_errors(register_user_form.password_confirm,class_='form-control') }}
+            {% endif %}
+            {{ render_field(register_user_form.submit,class_='btn btn-primary') }}
+        </form>
+        {#            继承menu文件#}
+        {% include "security/_menu.html" %}
+    </div>
+
+{% endblock %}
