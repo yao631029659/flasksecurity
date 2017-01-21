@@ -38,7 +38,7 @@ def logout():
 @app.route('/secret')
 # 只允许特定角色使用
 @login_required
-# @roles_required('admin', 'editor') 它是and的关系
+# @roles_required('admin', 'editor') admin和edit是and的关系
 @roles_required('admin')
 def secret():
     return '看到秘密了吗？'
