@@ -11,9 +11,12 @@
             {{ register_user_form.hidden_tag() }}
             {{ render_field_with_errors(register_user_form.email,class_='form-control') }}
             {{ render_field_with_errors(register_user_form.password,class_='form-control') }}
+
             {% if register_user_form.password_confirm %}
                 {{ render_field_with_errors(register_user_form.password_confirm,class_='form-control') }}
             {% endif %}
+{#            验证码部分#}
+            {{ render_field_with_errors(register_user_form.invitationcode,class_='form-control') }}
             {{ render_field(register_user_form.submit,class_='btn btn-primary') }}
         </form>
         {#            继承menu文件#}

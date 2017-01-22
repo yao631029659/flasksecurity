@@ -12,5 +12,9 @@ class Config(object):
     MAIL_USERNAME = 'm15913955859'
     # 这个授权码不是密码 在邮箱设置里面有 请不要乱用
     MAIL_PASSWORD = 's87654321'
+    # 设置密码的加密方式
+    SECURITY_PASSWORD_HASH = 'bcrypt'
+    # 和上面的那个必须同时设置 这个是加盐  现在密码变成这个样子了 $12$u4DzhZJ5ybZrYX7JB/NDUupCqdA44m3yjENm2SIhPz./RiTGySvbu
+    SECURITY_PASSWORD_SALT = 'something_super_secret_change_in_production'
     # 注册的时候不发送邮件
     # SECURITY_SEND_REGISTER_EMAIL=False

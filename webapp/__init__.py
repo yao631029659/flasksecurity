@@ -4,6 +4,7 @@ from flask_security.utils import logout_user
 from webapp.extension import user_datastore,mail
 from webapp.models import db,User
 from webapp.config import Config
+from webapp.forms import ExtendedRegisterForm
 
 # Create app
 app = Flask(__name__)
@@ -14,7 +15,7 @@ mail.init_app(app)
 
 
 # 实例化Security需要两个参数
-security = Security(app, user_datastore)
+security = Security(app, user_datastore,register_form=ExtendedRegisterForm)
 
 # Create a user to test with
 # 在request之前执行数据库添加操作
